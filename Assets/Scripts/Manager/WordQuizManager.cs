@@ -1,0 +1,201 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+
+public class WordQuizManager : MonoBehaviour
+{
+    public WordData[] wordList;
+
+    public TextMeshProUGUI wordText;
+    public RawImage imageDisplay;
+    public GameObject quizPanel;
+    public Image feedbackPanel;
+    
+    public GameObject answerPanel;
+    public TextMeshProUGUI answerWordText;
+    public RawImage answerImageDisplay;
+    public TextMeshProUGUI answerMeaningText;
+
+    public TextMeshProUGUI quizWordText;
+    
+    public Button mainButton;
+    public Button[] choiceButtons;
+
+    public AudioSource audioSource;
+    public AudioClip correctClip;
+    public AudioClip wrongClip;
+
+    private int currentIndex = 0;
+
+    private enum QuizPhase
+    {
+        ShowWord,
+        ShowImage,
+        Quiz,
+        ShowAnswer
+    }
+
+    private QuizPhase currentPhase = QuizPhase.ShowWord;
+
+    void Start()
+    {
+	if (wordList.Length > 0)
+	    {
+		ShowWord();
+	    }
+	else
+	    {
+		Debug.LogWarning("wordList is empty");
+	    }
+    }
+
+    public void OnMainButtonClick()
+    {
+        switch (currentPhase)
+        {
+            case QuizPhase.ShowWord:
+                ShowImage();
+                currentPhase = QuizPhase.ShowImage;
+                break;
+
+            case QuizPhase.ShowImage:
+                ShowQuiz();
+                currentPhase = QuizPhase.Quiz;
+                break;
+
+            case QuizPhase.ShowAnswer:
+                NextWord();
+                currentPhase = QuizPhase.ShowWord;
+                break;
+        }
+    }
+
+    
+    public void ReturnToHome()
+    {
+	SceneManager.LoadScene("Home");
+    }
+
+    void Shuffle<T>(List<T> list)
+    {
+	for (int i = 0; i < list.Count; i++)
+	    {
+		int randomIndex = Random.Range(i, list.Count);
+		(list[i], list[randomIndex]) = (list[randomIndex], list[i]);
+	    }
+    }
+    
+    void ShowWord()
+    {
+        var current = wordList[currentIndex];
+
+        wordText.text = current.word;
+        imageDisplay.enabled = false;
+        quizPanel.SetActive(false);
+        answerPanel.SetActive(false);
+        mainButton.GetComponentInChildren<TextMeshProUGUI>().text = "Show Image";
+    }
+    
+    void ShowImage()
+    {
+	var current = wordList[currentIndex];
+        wordText.text = "";
+        imageDisplay.texture = current.image;
+        imageDisplay.enabled = true;
+	answerImageDisplay.enabled = false;
+        mainButton.GetComponentInChildren<TextMeshProUGUI>().text = "Start Quiz";
+    }
+    
+    void ShowQuiz()
+    {
+	var current = wordList[currentIndex];
+	
+	string correct = current.meaning;
+
+	quizWordText.text = $"Quiz for: {current.word}";
+	
+	List<string> distractors = new List<string>();
+	while (distractors.Count < 3)
+	    {
+		int rand = Random.Range(0, wordList.Length);
+		string candidate = wordList[rand].meaning;
+		
+		if (candidate != correct && !distractors.Contains(candidate))
+		    {
+			distractors.Add(candidate);
+		    }
+	    }
+	
+	List<string> choices = new List<string>(distractors);
+	choices.Add(correct);
+	Shuffle(choices);
+	
+	for (int i = 0; i < choiceButtons.Length; i++)
+	    {
+		string choiceText = choices[i];
+		choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = choiceText;
+		
+		choiceButtons[i].onClick.RemoveAllListeners();
+		
+		choiceButtons[i].onClick.AddListener(() => CheckAnswer(choiceText));
+	    }
+	
+	quizPanel.SetActive(true);
+	mainButton.gameObject.SetActive(false);
+    }
+
+    IEnumerator ShowFeedbackColor(Color color)
+    {
+	feedbackPanel.color = new Color(color.r, color.g, color.b, 0.5f);
+	yield return new WaitForSeconds(0.5f);
+	feedbackPanel.color = new Color(0, 0, 0, 0);
+    }
+
+    void CheckAnswer(string selected)
+    {
+	var current = wordList[currentIndex];
+	bool isCorrect = selected == current.meaning;
+	
+	if (isCorrect)
+	    {
+		audioSource.PlayOneShot(correctClip);
+		StartCoroutine(ShowFeedbackColor(Color.green));
+	    }
+	else
+	    {
+		audioSource.PlayOneShot(wrongClip);
+		StartCoroutine(ShowFeedbackColor(Color.red));
+	    }
+	
+	ShowAnswer();
+	
+	currentPhase = QuizPhase.ShowAnswer;
+    }
+    
+    void ShowAnswer()
+    {
+	var current = wordList[currentIndex];
+
+	imageDisplay.enabled = false;
+	answerImageDisplay.enabled = true;
+	
+	answerPanel.SetActive(true);
+	quizPanel.SetActive(false);
+	
+	answerWordText.text = current.word;
+	answerImageDisplay.texture = current.image;
+	answerMeaningText.text = current.meaning;
+	
+	mainButton.gameObject.SetActive(true);
+	mainButton.GetComponentInChildren<TextMeshProUGUI>().text = "Next Word";
+    }
+    
+    void NextWord()
+    {
+	currentIndex = (currentIndex + 1) % wordList.Length;
+	ShowWord();
+    }
+}

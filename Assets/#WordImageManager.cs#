@@ -1,0 +1,43 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class WordImageManager : MonoBehaviour
+{
+    [System.Serializable]
+    public class WordImagePair
+    {
+        public string word;
+        public Texture2D image;
+    }
+    user-init-file 
+    public WordImagePair[] pairs;
+    public RawImage imageDisplay;
+    public TextMeshProUGUI wordDisplay;
+    public float displayDuration = 3f;
+
+    private int currentIndex = 0;
+    private float timer = 0f;
+
+    void Start()
+    {
+        ShowPair(currentIndex);
+    }
+
+    void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer >= displayDuration)
+        {
+            currentIndex = (currentIndex + 1) % pairs.Length;
+            ShowPair(currentIndex);
+            timer = 0f;
+        }
+    }
+
+    void ShowPair(int index)
+    {
+        wordDisplay.text = pairs[index].word;
+        imageDisplay.texture = pairs[index].image;
+    }
+}
