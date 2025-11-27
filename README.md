@@ -4,15 +4,15 @@
 
 ## Overview  
 
-This project is a prototype of an English vocabulary learning application built with \*\*Unity (6000.0.47f1)\*\* and \*\*C#\*\*.  
+This project is a prototype of an English vocabulary learning application built with **Unity (6000.0.47f1)** and **C#**.  
 
-It was created both as a \*\*learning application prototype\*\* and as part of my process for studying \*\*Unity development\*\*.  
+It was created both as a **learning application prototype** and as part of my process for studying **Unity development**.  
 
 The goal of this prototype is to explore how images can support learners in understanding English words directly, without first translating them into their native language.
 
 
 
-This concept is inspired by the \*\*Dual Coding Theory\*\*, which suggests that combining verbal information with visual information enhances comprehension and memory.
+This concept is inspired by the **Dual Coding Theory**, which suggests that combining verbal information with visual information enhances comprehension and memory.
 
 
 
@@ -82,9 +82,9 @@ I aimed for clear logic separation and simple, readable C# code suitable for a p
 
 
 
-The original prototype used \*\*VOICEROID (Otomachi Una)\*\* for correct/incorrect voice feedback.  
+The original prototype used **VOICEROID (Otomachi Una)** for correct/incorrect voice feedback.  
 
-Due to licensing restrictions, the public version replaces these with \*\*free sound effects\*\*.
+Due to licensing restrictions, the public version replaces these with **free sound effects**.
 
 
 
@@ -117,9 +117,9 @@ No copyrighted audio files are included in this repository.
 
 
 
-- Explore a learning method where English words are understood through \*\*images\*\*, not translation.  
+- Explore a learning method where English words are understood through **images**, not translation.  
 
-- Experiment with concepts from \*\*Dual Coding Theory\*\* in a practical application.  
+- Experiment with concepts from **Dual Coding Theory** in a practical application.  
 
 - Practice Unity development and C# scripting through building a small but functional prototype.
 
