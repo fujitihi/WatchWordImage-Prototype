@@ -1,8 +1,8 @@
-\# WatchWordImage Prototype (Unity / C#)
+# WatchWordImage Prototype (Unity / C#)
 
 
 
-\## Overview  
+## Overview  
 
 This project is a prototype of an English vocabulary learning application built with \*\*Unity (6000.0.47f1)\*\* and \*\*C#\*\*.  
 
@@ -20,7 +20,7 @@ This concept is inspired by the \*\*Dual Coding Theory\*\*, which suggests that 
 
 
 
-\## Features
+## Features
 
 
 
@@ -35,7 +35,7 @@ This concept is inspired by the \*\*Dual Coding Theory\*\*, which suggests that 
 
 
 
-\## Scenes
+## Scenes
 
 
 ### **Home.unity**
@@ -50,20 +50,6 @@ This concept is inspired by the \*\*Dual Coding Theory\*\*, which suggests that 
 - Designed for simple, click-only operation.
 
 ---
-
-
-
-\## Key Scripts (C#)
-
-
-
-All scripts are located under `Assets/Scripts/`.
-
-
-
-Although this is a small prototype, the structure follows a clean separation of responsibilities:
-
-
 
 ## Key Scripts (C#)
 
@@ -92,7 +78,7 @@ I aimed for clear logic separation and simple, readable C# code suitable for a p
 
 
 
-\## Audio Notice
+## Audio Notice
 
 
 
@@ -110,7 +96,7 @@ No copyrighted audio files are included in this repository.
 
 
 
-\## How to Use
+## How to Use
 
 
 
@@ -127,15 +113,15 @@ No copyrighted audio files are included in this repository.
 
 
 
-\## Purpose of the Prototype
+## Purpose of the Prototype
 
 
 
-\- Explore a learning method where English words are understood through \*\*images\*\*, not translation.  
+- Explore a learning method where English words are understood through \*\*images\*\*, not translation.  
 
-\- Experiment with concepts from \*\*Dual Coding Theory\*\* in a practical application.  
+- Experiment with concepts from \*\*Dual Coding Theory\*\* in a practical application.  
 
-\- Practice Unity development and C# scripting through building a small but functional prototype.
+- Practice Unity development and C# scripting through building a small but functional prototype.
 
 
 
@@ -143,7 +129,7 @@ No copyrighted audio files are included in this repository.
 
 
 
-\## Repository Structure
+## Repository Structure
 
 
 Assets/
